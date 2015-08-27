@@ -11,10 +11,20 @@ import com.vfg.appengineblank.commons.Utils;
 import com.vfg.appengineblank.commons.dto.RequestDto;
 import com.vfg.appengineblank.commons.dto.ResponseDto;
 
+/**
+ * Servicio de prueba.
+ * 
+ * @author victor
+ */
+
 @Controller
 @RequestMapping("/info")
 public class InfoService {
 
+	/**
+	 * Retorna un mensaje de OK en el formato especificado en la cabecera Accept
+	 * @return
+	 */
 	@RequestMapping(value = "/test", method = RequestMethod.GET)
 	public @ResponseBody ResponseDto getStatus() {
 		ResponseDto respuesta = new ResponseDto();
@@ -22,6 +32,13 @@ public class InfoService {
 		return respuesta;
 	}
 
+	/**
+	 * Retorna la cadena recibida como valor de peticion.param invertida.
+	 * Es capaz de entender datos en varios formatos segun la cabecera Content-type y retorna
+	 * en el formato especificado en la cabecera Accept
+	 * @param peticion
+	 * @return
+	 */
 	@RequestMapping(value = "/test", method = RequestMethod.POST)
 	public @ResponseBody ResponseDto getReversedString(@RequestBody RequestDto peticion) {
 		ResponseDto respuesta = new ResponseDto();

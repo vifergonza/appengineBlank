@@ -10,6 +10,12 @@
         http://www.springframework.org/schema/mvc
         http://www.springframework.org/schema/mvc/spring-mvc.xsd ">
 
+	<!-- Especificamos el package donde Spring debe buscar anotaciones -->
+	<context:component-scan base-package="com.vfg.appengineblank" />
+	
+	<!-- AnnotationMethodHandlerAdapter nos permite especificar las clases que se encargan
+	de la transformacion de los datos recibidos mediante @RequestBody o retornados mediante
+	@ResponseBody en los formatos indicados por las cabeceras (json o xml)  -->
 	<bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
    		<property name="messageConverters">	
       		<list>
@@ -19,15 +25,18 @@
    		</property>
 	</bean>
 
+	<!-- Bean para la conversion a json -->
 	<bean id="jsonConverter" class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter">
    		<property name="supportedMediaTypes" value="application/json" />
 	</bean>
 	
+	<!-- Bean para la conversion a xml -->
 	<bean id="marshallingConverter" class="org.springframework.http.converter.xml.MarshallingHttpMessageConverter">
 		<constructor-arg ref="jaxbMarshaller" />
     	<property name="supportedMediaTypes" value="application/xml"/>
     </bean>
 	
+	<!-- Por desgracia hay que listar todas las clases que pueden ser transformadas a xml -->
 	<bean id="jaxbMarshaller" class="org.springframework.oxm.jaxb.Jaxb2Marshaller">
     	<property name="classesToBeBound">
 	  		<list>
@@ -36,12 +45,13 @@
 	  		</list>
     	</property>
 	</bean>
-	
-	<context:component-scan base-package="com.vfg.appengineblank" />
-	
+		
+	<!-- Aqui indcamos la clase que se encarga de transformar los datos que llegan en
+	formato x-www-formurlencoded -->
 	<mvc:annotation-driven>
 		<mvc:message-converters>
         	<bean class="com.vfg.appengineblank.commons.adapters.ObjectHttpMessageConverter"/>
     	</mvc:message-converters>
 	</mvc:annotation-driven>
+	
 </beans>
