@@ -13,10 +13,17 @@
 	<global-method-security secured-annotations="enabled" pre-post-annotations="enabled" />
 	
 	<!-- Stateless RESTful services use BASIC authentication -->
-    <http entry-point-ref="appEngineEntryPoint" >
+    <http auto-config="false" entry-point-ref="restEntryPoint" create-session="stateless" disable-url-rewriting="true" use-expressions="true" >
+		<form-login
+        	authentication-success-handler-ref="restAuthenticationSuccessHandler"
+         	authentication-failure-handler-ref="restAuthenticationFailureHandler"
+      	/>       
+        <logout />
     </http>
  
- 	<beans:bean id="appEngineEntryPoint" class="com.vfg.appengineblank.commons.security.AppEngineEntryPoint" />
+ 	<beans:bean id="restEntryPoint" class="com.vfg.appengineblank.commons.security.RestEntryPoint" />
+ 	<beans:bean id="restAuthenticationSuccessHandler" class="com.vfg.appengineblank.commons.security.RestAuthenticationSuccessHandler" />
+ 	<beans:bean id="restAuthenticationFailureHandler" class="org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler" />
  	
     <authentication-manager>
         <authentication-provider>
