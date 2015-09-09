@@ -41,4 +41,17 @@ curl -X POST http://localhost:8888/info/test -H 'Content-type: application/xml' 
 echo ""
 curl -X POST http://localhost:8888/info/test -H 'Content-type: application/xml' -H 'Accept: application/xml' -d '<requestDto><param>parametro de prueba</param></requestDto>'
 
+echo ""
+echo "======================="
+echo ""
+echo "Seguridad"
+
+curl http://localhost:8888/login -v -X POST -d user=vfg -d password=123abc -c appcookie.txt
+echo
+curl http://localhost:8888/info/test/secured -b appcookie.txt
+echo
+curl http://localhost:8888/logout
+echo
+curl http://localhost:8888/info/test/secured -b /home/victor/temp/vfgck.txt
+
 exit

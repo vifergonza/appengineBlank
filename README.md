@@ -19,5 +19,8 @@ Podemos elegir el formato en el cual el servidor nos retorna los datos, también
 ## Seleccion de idioma
 Tambien podemos establecer el idioma en el que queremos que el servidor nos responda mediante la cabecera *Accept-Language: en*
 
+## Seguridad
+Esta versión controla la seguriadad mediante una cookie *JSESSIONID*. Hemos particularizado las direcciones de las acciones de login y logout (asi como los parametros de nombre de usuario y contraseña) para no usar las predefinidas por spring security.
+
 ###### Otros datos
 En el fichero *pruebasRest.sh* hay una bateria de pruebas *curl* con las cabeceras comentadas anteriormente.

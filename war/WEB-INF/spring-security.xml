@@ -13,12 +13,18 @@
 	<global-method-security secured-annotations="enabled" pre-post-annotations="enabled" />
 	
 	<!-- Stateless RESTful services use BASIC authentication -->
-    <http auto-config="false" entry-point-ref="restEntryPoint" create-session="stateless" disable-url-rewriting="true" use-expressions="true" >
+    <http auto-config="false" entry-point-ref="restEntryPoint" disable-url-rewriting="true" use-expressions="true" >
+		<!-- Particularizamos la direccion de login y los nombres de los parametros de usuario y contraseña 
+						create-session="stateless"	
+		-->
 		<form-login
+        	login-processing-url="/login"
+			username-parameter="user"
+			password-parameter="password"
         	authentication-success-handler-ref="restAuthenticationSuccessHandler"
          	authentication-failure-handler-ref="restAuthenticationFailureHandler"
       	/>       
-        <logout />
+        <logout invalidate-session="true" delete-cookies="JSESSIONID" logout-url="/logout"/>
     </http>
  
  	<beans:bean id="restEntryPoint" class="com.vfg.appengineblank.commons.security.RestEntryPoint" />
