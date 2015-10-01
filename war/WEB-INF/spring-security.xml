@@ -14,6 +14,8 @@
 	
 	<!-- Stateless RESTful services use BASIC authentication -->
     <http auto-config="false" entry-point-ref="restEntryPoint" disable-url-rewriting="true" use-expressions="true" >
+		<intercept-url pattern="/login" access="permitAll" requires-channel="https"/>
+		<intercept-url pattern="/info/*" access="permitAll" requires-channel="https"/>
 		<!-- Particularizamos la direccion de login y los nombres de los parametros de usuario y contraseña 
 						create-session="stateless"	
 		-->
