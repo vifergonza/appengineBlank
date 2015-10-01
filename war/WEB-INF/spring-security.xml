@@ -13,11 +13,13 @@
 	<global-method-security secured-annotations="enabled" pre-post-annotations="enabled" />
 	
 	<!-- Stateless RESTful services use BASIC authentication -->
-    <http auto-config="false" entry-point-ref="restEntryPoint" disable-url-rewriting="true" use-expressions="true" >
+    <http auto-config="false" create-session="stateless"
+    	  entry-point-ref="restEntryPoint" disable-url-rewriting="true" 
+    	  security-context-repository-ref="restSecurityContextRepository" use-expressions="true" >
 		<intercept-url pattern="/login" access="permitAll" requires-channel="https"/>
 		<intercept-url pattern="/info/*" access="permitAll" requires-channel="https"/>
 		<!-- Particularizamos la direccion de login y los nombres de los parametros de usuario y contraseña 
-						create-session="stateless"	
+						"	
 		-->
 		<form-login
         	login-processing-url="/login"
@@ -26,10 +28,11 @@
         	authentication-success-handler-ref="restAuthenticationSuccessHandler"
          	authentication-failure-handler-ref="restAuthenticationFailureHandler"
       	/>       
-        <logout invalidate-session="true" delete-cookies="JSESSIONID" logout-url="/logout"/>
     </http>
  
+	<beans:bean id="restSecurityContextRepository" class="com.vfg.appengineblank.commons.security.RestcacheSecurityContextRepository"  /> 
  	<beans:bean id="restEntryPoint" class="com.vfg.appengineblank.commons.security.RestEntryPoint" />
+ 	
  	<beans:bean id="restAuthenticationSuccessHandler" class="com.vfg.appengineblank.commons.security.RestAuthenticationSuccessHandler" />
  	<beans:bean id="restAuthenticationFailureHandler" class="org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler" />
  	
